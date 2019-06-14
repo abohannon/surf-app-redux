@@ -1,14 +1,17 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { ThemeProvider, styled } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import MuiContainer from '@material-ui/core/Container'
 import { connect } from 'react-redux'
 import ReportContainer from './ReportContainer'
+import ModalRoot from './ModalRoot'
 import { TopNav } from '../components/TopNav'
 import { SideNav } from '../components/SideNav'
 import { mainTheme } from '../style/theme'
 
 import { fetchBuoyData } from '../actions/buoyData'
+import { toggleModal } from '../actions/modal'
+
+import { LOGIN_USER } from '../actions/types'
 
 const RootContainer = styled(`div`)({
   display: `flex`,
@@ -27,27 +30,33 @@ class App extends Component {
     this.props.dispatch(fetchBuoyData(data))
   }
 
+  handleLogin = () => {
+    this.props.dispatch(toggleModal(LOGIN_USER))
+  }
+
   render() {
     console.log(this.props)
     return (
       <ThemeProvider theme={mainTheme}>
         <CssBaseline />
         <RootContainer>
-          <TopNav />
+          <TopNav handleLogin={this.handleLogin} />
           <SideNav />
           <ContentContainer>
             <NavPaddingDiv />
             <ReportContainer />
           </ContentContainer>
         </RootContainer>
+        <ModalRoot />
       </ThemeProvider>
     )
   }
 }
 
 
-const mapStateToProps = ({ buoyData }) => ({
+const mapStateToProps = ({ buoyData, modal }) => ({
   buoyData,
+  modal,
 })
 
 export default connect(mapStateToProps)(App)

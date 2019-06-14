@@ -1,3 +1,8 @@
 export const BUOY_DATA_PENDING = `BUOY_DATA_PENDING`
 export const BUOY_DATA_RESOLVED = `BUOY_DATA_RESOLVED`
 export const BUOY_DATA_REJECTED = `BUOY_DATA_REJECTED`
+
+export const MODAL_OPEN = `MODAL_OPEN`
+export const MODAL_CLOSE = `MODAL_CLOSE`
+
+export const LOGIN_USER = `LOGIN_USER`

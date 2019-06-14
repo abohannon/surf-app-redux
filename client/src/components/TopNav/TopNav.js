@@ -15,13 +15,22 @@ const StyledToolbar = styled(Toolbar)({
   justifyContent: `center`,
 })
 
-const TopNav = props => (
-  <StyledAppBar position="fixed" {...props}>
-    <StyledToolbar>
-      <Button color="inherit" style={{ alignSelf: `flex-end` }}>LOGIN</Button>
-    </StyledToolbar>
-  </StyledAppBar>
-)
+const TopNav = (props) => {
+  const { handleLogin, ...rest } = props
+  return (
+    <StyledAppBar position="fixed" {...rest}>
+      <StyledToolbar>
+        <Button
+          color="inherit"
+          style={{ alignSelf: `flex-end` }}
+          onClick={() => handleLogin()}
+        >
+      LOGIN
+        </Button>
+      </StyledToolbar>
+    </StyledAppBar>
+  )
+}
 
 TopNav.propTypes = {
 
