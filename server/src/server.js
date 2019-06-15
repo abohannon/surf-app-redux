@@ -5,7 +5,7 @@ import prisma from './prisma.js'
 const server = new GraphQLServer({
   typeDefs: `./src/schema.graphql`,
   resolvers,
-  contect(request) {
+  context(request) {
     return {
       prisma,
       request,

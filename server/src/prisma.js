@@ -6,4 +6,6 @@ const prisma = new Prisma({
   secret: process.env.PRISMA_SECRET,
 })
 
+console.log('prisma secret', process.env.PRISMA_SECRET)
+
 export default prisma
