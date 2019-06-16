@@ -1,38 +1,34 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { styled } from '@material-ui/styles'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-
-// TODO: Temporary
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
-}))
+import Typography from '@material-ui/core/Typography'
+import { Paper } from '../components/common'
 
 class ReportContainer extends Component {
+  componentDidMount() {
+
+  }
+
   render() {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <StyledPaper>xs=12</StyledPaper>
+          <Paper>
+            <Typography variant="h3" component="h1">
+              Mission Beach
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper>
+            Chart
+          </Paper>
         </Grid>
         <Grid item xs={6}>
-          <StyledPaper>xs=6</StyledPaper>
+          <Paper>xs=6</Paper>
         </Grid>
         <Grid item xs={6}>
-          <StyledPaper>xs=6</StyledPaper>
-        </Grid>
-        <Grid item xs={3}>
-          <StyledPaper>xs=3</StyledPaper>
-        </Grid>
-        <Grid item xs={3}>
-          <StyledPaper>xs=3</StyledPaper>
-        </Grid>
-        <Grid item xs={3}>
-          <StyledPaper>xs=3</StyledPaper>
-        </Grid>
-        <Grid item xs={3}>
-          <StyledPaper>xs=3</StyledPaper>
+          <Paper>xs=6</Paper>
         </Grid>
       </Grid>
     )
