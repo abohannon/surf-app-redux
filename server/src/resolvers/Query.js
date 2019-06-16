@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch'
 import getUserId from '../utils/getUserId'
 
 const Query = {
@@ -32,6 +33,13 @@ const Query = {
 
     return user[0]
   },
+  async buoy(parent, { stationId }, content, info) {
+    const response = await fetch(`https://www.ndbc.noaa.gov/data/realtime2/${stationId}.txt`)
+    const json = await response.json()
+
+    console.log(json)
+    return json
+  }
 }
 
 export default Query

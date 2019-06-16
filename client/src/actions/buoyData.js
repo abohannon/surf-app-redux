@@ -5,13 +5,16 @@ import {
   BUOY_DATA_REJECTED,
 } from './types'
 
-export const fetchBuoyData = ({ stationId }) => async (dispatch) => {
+// TODO: For testing
+import { buoyData } from '../dummy'
+
+export const fetchBuoyData = () => async (dispatch) => {
   dispatch({
     type: BUOY_DATA_PENDING,
   })
 
   try {
-    const endpoint = `https://jsonplaceholder.typicode.com/todos/1`
+    // const endpoint = `https://jsonplaceholder.typicode.com/todos/1`
     // const options = {
     //   method: `GET`,
     //   mode: `no-cors`,
@@ -20,12 +23,12 @@ export const fetchBuoyData = ({ stationId }) => async (dispatch) => {
     //   },
     // }
 
-    const response = await fetch(endpoint)
-    const payload = await response.json()
+    // const response = await fetch(endpoint)
+    // const payload = await response.json()
 
     dispatch({
       type: BUOY_DATA_RESOLVED,
-      payload,
+      payload: buoyData,
     })
   } catch (error) {
     dispatch({

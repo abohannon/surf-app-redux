@@ -7,6 +7,10 @@ const Mutation = {
   async createUser(parent, args, { prisma }, info) {
     const password = await hashPassword(args.data.password)
 
+    const exists = await prisma.exists.User({ email: args.data.email })
+
+    if (exists) throw new Error(`User with that email already exists`)
+
     const user = await prisma.mutation.createUser({ 
       data: {
         ...args.data,
@@ -31,8 +35,6 @@ const Mutation = {
     const isMatch = await bcrypt.compare(args.data.password, user.password)
 
     if (!isMatch) throw new Error(`Unable to login.`)
-
-
 
     return {
       token: generateToken(user.id),

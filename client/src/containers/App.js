@@ -30,8 +30,8 @@ class App extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    // const data = { stationId: 46258 }
-    // dispatch(fetchBuoyData(data))
+
+    dispatch(fetchBuoyData())
   }
 
   handleLogin = (data) => {

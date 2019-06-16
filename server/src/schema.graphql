@@ -3,6 +3,7 @@
 type Query {
   users(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!
   me: User!
+  buoy(stationId: String!): [Buoy!]!
 }
 
 type Mutation {
@@ -11,10 +12,6 @@ type Mutation {
   updateUser(data: UpdateUserInput!): User!
   login(data: LoginUserInput!): AuthPayload!
 }
-
-# type Subscription {
-
-# }
 
 type AuthPayload {
   token: String!
@@ -45,6 +42,20 @@ type User {
   password: String!
   updatedAt: String!
   createdAt: String!
+}
+
+type Buoy {
+  id: ID!
+  date: String
+  windDirection: String
+  windSpeed: String
+  waveHeight: String
+  dominantWavePeriod: String
+  averageWavePeriod: String
+  meanWaveDirection: String
+  airTemp: String
+  waterTemp: String
+  tide: String
 }
 
 enum MutationType {

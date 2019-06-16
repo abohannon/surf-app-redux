@@ -7,3 +7,5 @@ export const generateToken = (userId) => {
     { expiresIn: `7 days` }
   )
 }
+
+export default generateToken

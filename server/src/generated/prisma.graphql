@@ -1,32 +1,316 @@
-# source: http://localhost:4466
-# timestamp: Fri Jun 14 2019 07:13:13 GMT-0700 (PDT)
+type AggregateBuoy {
+  count: Int!
+}
 
 type AggregateUser {
   count: Int!
 }
 
 type BatchPayload {
-  """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
 
-"""Raw JSON value"""
-scalar Json
+type Buoy {
+  id: ID!
+  date: String
+  windDirection: String
+  windSpeed: String
+  waveHeight: String
+  dominantWavePeriod: String
+  averageWavePeriod: String
+  meanWaveDirection: String
+  airTemp: String
+  waterTemp: String
+  tide: String
+}
 
-"""
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-"""
+type BuoyConnection {
+  pageInfo: PageInfo!
+  edges: [BuoyEdge]!
+  aggregate: AggregateBuoy!
+}
+
+input BuoyCreateInput {
+  id: ID
+  date: String
+  windDirection: String
+  windSpeed: String
+  waveHeight: String
+  dominantWavePeriod: String
+  averageWavePeriod: String
+  meanWaveDirection: String
+  airTemp: String
+  waterTemp: String
+  tide: String
+}
+
+type BuoyEdge {
+  node: Buoy!
+  cursor: String!
+}
+
+enum BuoyOrderByInput {
+  id_ASC
+  id_DESC
+  date_ASC
+  date_DESC
+  windDirection_ASC
+  windDirection_DESC
+  windSpeed_ASC
+  windSpeed_DESC
+  waveHeight_ASC
+  waveHeight_DESC
+  dominantWavePeriod_ASC
+  dominantWavePeriod_DESC
+  averageWavePeriod_ASC
+  averageWavePeriod_DESC
+  meanWaveDirection_ASC
+  meanWaveDirection_DESC
+  airTemp_ASC
+  airTemp_DESC
+  waterTemp_ASC
+  waterTemp_DESC
+  tide_ASC
+  tide_DESC
+}
+
+type BuoyPreviousValues {
+  id: ID!
+  date: String
+  windDirection: String
+  windSpeed: String
+  waveHeight: String
+  dominantWavePeriod: String
+  averageWavePeriod: String
+  meanWaveDirection: String
+  airTemp: String
+  waterTemp: String
+  tide: String
+}
+
+type BuoySubscriptionPayload {
+  mutation: MutationType!
+  node: Buoy
+  updatedFields: [String!]
+  previousValues: BuoyPreviousValues
+}
+
+input BuoySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BuoyWhereInput
+  AND: [BuoySubscriptionWhereInput!]
+  OR: [BuoySubscriptionWhereInput!]
+  NOT: [BuoySubscriptionWhereInput!]
+}
+
+input BuoyUpdateInput {
+  date: String
+  windDirection: String
+  windSpeed: String
+  waveHeight: String
+  dominantWavePeriod: String
+  averageWavePeriod: String
+  meanWaveDirection: String
+  airTemp: String
+  waterTemp: String
+  tide: String
+}
+
+input BuoyUpdateManyMutationInput {
+  date: String
+  windDirection: String
+  windSpeed: String
+  waveHeight: String
+  dominantWavePeriod: String
+  averageWavePeriod: String
+  meanWaveDirection: String
+  airTemp: String
+  waterTemp: String
+  tide: String
+}
+
+input BuoyWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  date: String
+  date_not: String
+  date_in: [String!]
+  date_not_in: [String!]
+  date_lt: String
+  date_lte: String
+  date_gt: String
+  date_gte: String
+  date_contains: String
+  date_not_contains: String
+  date_starts_with: String
+  date_not_starts_with: String
+  date_ends_with: String
+  date_not_ends_with: String
+  windDirection: String
+  windDirection_not: String
+  windDirection_in: [String!]
+  windDirection_not_in: [String!]
+  windDirection_lt: String
+  windDirection_lte: String
+  windDirection_gt: String
+  windDirection_gte: String
+  windDirection_contains: String
+  windDirection_not_contains: String
+  windDirection_starts_with: String
+  windDirection_not_starts_with: String
+  windDirection_ends_with: String
+  windDirection_not_ends_with: String
+  windSpeed: String
+  windSpeed_not: String
+  windSpeed_in: [String!]
+  windSpeed_not_in: [String!]
+  windSpeed_lt: String
+  windSpeed_lte: String
+  windSpeed_gt: String
+  windSpeed_gte: String
+  windSpeed_contains: String
+  windSpeed_not_contains: String
+  windSpeed_starts_with: String
+  windSpeed_not_starts_with: String
+  windSpeed_ends_with: String
+  windSpeed_not_ends_with: String
+  waveHeight: String
+  waveHeight_not: String
+  waveHeight_in: [String!]
+  waveHeight_not_in: [String!]
+  waveHeight_lt: String
+  waveHeight_lte: String
+  waveHeight_gt: String
+  waveHeight_gte: String
+  waveHeight_contains: String
+  waveHeight_not_contains: String
+  waveHeight_starts_with: String
+  waveHeight_not_starts_with: String
+  waveHeight_ends_with: String
+  waveHeight_not_ends_with: String
+  dominantWavePeriod: String
+  dominantWavePeriod_not: String
+  dominantWavePeriod_in: [String!]
+  dominantWavePeriod_not_in: [String!]
+  dominantWavePeriod_lt: String
+  dominantWavePeriod_lte: String
+  dominantWavePeriod_gt: String
+  dominantWavePeriod_gte: String
+  dominantWavePeriod_contains: String
+  dominantWavePeriod_not_contains: String
+  dominantWavePeriod_starts_with: String
+  dominantWavePeriod_not_starts_with: String
+  dominantWavePeriod_ends_with: String
+  dominantWavePeriod_not_ends_with: String
+  averageWavePeriod: String
+  averageWavePeriod_not: String
+  averageWavePeriod_in: [String!]
+  averageWavePeriod_not_in: [String!]
+  averageWavePeriod_lt: String
+  averageWavePeriod_lte: String
+  averageWavePeriod_gt: String
+  averageWavePeriod_gte: String
+  averageWavePeriod_contains: String
+  averageWavePeriod_not_contains: String
+  averageWavePeriod_starts_with: String
+  averageWavePeriod_not_starts_with: String
+  averageWavePeriod_ends_with: String
+  averageWavePeriod_not_ends_with: String
+  meanWaveDirection: String
+  meanWaveDirection_not: String
+  meanWaveDirection_in: [String!]
+  meanWaveDirection_not_in: [String!]
+  meanWaveDirection_lt: String
+  meanWaveDirection_lte: String
+  meanWaveDirection_gt: String
+  meanWaveDirection_gte: String
+  meanWaveDirection_contains: String
+  meanWaveDirection_not_contains: String
+  meanWaveDirection_starts_with: String
+  meanWaveDirection_not_starts_with: String
+  meanWaveDirection_ends_with: String
+  meanWaveDirection_not_ends_with: String
+  airTemp: String
+  airTemp_not: String
+  airTemp_in: [String!]
+  airTemp_not_in: [String!]
+  airTemp_lt: String
+  airTemp_lte: String
+  airTemp_gt: String
+  airTemp_gte: String
+  airTemp_contains: String
+  airTemp_not_contains: String
+  airTemp_starts_with: String
+  airTemp_not_starts_with: String
+  airTemp_ends_with: String
+  airTemp_not_ends_with: String
+  waterTemp: String
+  waterTemp_not: String
+  waterTemp_in: [String!]
+  waterTemp_not_in: [String!]
+  waterTemp_lt: String
+  waterTemp_lte: String
+  waterTemp_gt: String
+  waterTemp_gte: String
+  waterTemp_contains: String
+  waterTemp_not_contains: String
+  waterTemp_starts_with: String
+  waterTemp_not_starts_with: String
+  waterTemp_ends_with: String
+  waterTemp_not_ends_with: String
+  tide: String
+  tide_not: String
+  tide_in: [String!]
+  tide_not_in: [String!]
+  tide_lt: String
+  tide_lte: String
+  tide_gt: String
+  tide_gte: String
+  tide_contains: String
+  tide_not_contains: String
+  tide_starts_with: String
+  tide_not_starts_with: String
+  tide_ends_with: String
+  tide_not_ends_with: String
+  AND: [BuoyWhereInput!]
+  OR: [BuoyWhereInput!]
+  NOT: [BuoyWhereInput!]
+}
+
+input BuoyWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createBuoy(data: BuoyCreateInput!): Buoy!
+  updateBuoy(data: BuoyUpdateInput!, where: BuoyWhereUniqueInput!): Buoy
+  updateManyBuoys(data: BuoyUpdateManyMutationInput!, where: BuoyWhereInput): BatchPayload!
+  upsertBuoy(where: BuoyWhereUniqueInput!, create: BuoyCreateInput!, update: BuoyUpdateInput!): Buoy!
+  deleteBuoy(where: BuoyWhereUniqueInput!): Buoy
+  deleteManyBuoys(where: BuoyWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteUser(where: UserWhereUniqueInput!): User
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
 enum MutationType {
@@ -35,58 +319,41 @@ enum MutationType {
   DELETED
 }
 
-"""An object with an ID"""
 interface Node {
-  """The id of the object."""
   id: ID!
 }
 
-"""Information about pagination in a connection."""
 type PageInfo {
-  """When paginating forwards, are there more items?"""
   hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
   startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
   endCursor: String
 }
 
-enum PrismaDatabase {
-  default
-}
-
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  buoy(where: BuoyWhereUniqueInput!): Buoy
+  buoys(where: BuoyWhereInput, orderBy: BuoyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Buoy]!
+  buoysConnection(where: BuoyWhereInput, orderBy: BuoyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BuoyConnection!
   user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
+  node(id: ID!): Node
 }
 
 type Subscription {
+  buoy(where: BuoySubscriptionWhereInput): BuoySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
-type User implements Node {
+type User {
   id: ID!
   name: String!
+  email: String!
+  password: String!
 }
 
-"""A connection to a list of items."""
 type UserConnection {
-  """Information to aid in pagination."""
   pageInfo: PageInfo!
-
-  """A list of edges."""
   edges: [UserEdge]!
   aggregate: AggregateUser!
 }
@@ -94,14 +361,12 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   name: String!
+  email: String!
+  password: String!
 }
 
-"""An edge in a connection."""
 type UserEdge {
-  """The item at the end of the edge."""
   node: User!
-
-  """A cursor for use in pagination."""
   cursor: String!
 }
 
@@ -110,11 +375,17 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   name: String!
+  email: String!
+  password: String!
 }
 
 type UserSubscriptionPayload {
@@ -125,134 +396,91 @@ type UserSubscriptionPayload {
 }
 
 input UserSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserSubscriptionWhereInput!]
-
-  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
   updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
   updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
   updatedFields_contains_some: [String!]
   node: UserWhereInput
+  AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
 }
 
 input UserUpdateInput {
   name: String
+  email: String
+  password: String
 }
 
 input UserUpdateManyMutationInput {
   name: String
+  email: String
+  password: String
 }
 
 input UserWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserWhereInput!]
   id: ID
-
-  """All values that are not equal to given value."""
   id_not: ID
-
-  """All values that are contained in given list."""
   id_in: [ID!]
-
-  """All values that are not contained in given list."""
   id_not_in: [ID!]
-
-  """All values less than the given value."""
   id_lt: ID
-
-  """All values less than or equal the given value."""
   id_lte: ID
-
-  """All values greater than the given value."""
   id_gt: ID
-
-  """All values greater than or equal the given value."""
   id_gte: ID
-
-  """All values containing the given string."""
   id_contains: ID
-
-  """All values not containing the given string."""
   id_not_contains: ID
-
-  """All values starting with the given string."""
   id_starts_with: ID
-
-  """All values not starting with the given string."""
   id_not_starts_with: ID
-
-  """All values ending with the given string."""
   id_ends_with: ID
-
-  """All values not ending with the given string."""
   id_not_ends_with: ID
   name: String
-
-  """All values that are not equal to given value."""
   name_not: String
-
-  """All values that are contained in given list."""
   name_in: [String!]
-
-  """All values that are not contained in given list."""
   name_not_in: [String!]
-
-  """All values less than the given value."""
   name_lt: String
-
-  """All values less than or equal the given value."""
   name_lte: String
-
-  """All values greater than the given value."""
   name_gt: String
-
-  """All values greater than or equal the given value."""
   name_gte: String
-
-  """All values containing the given string."""
   name_contains: String
-
-  """All values not containing the given string."""
   name_not_contains: String
-
-  """All values starting with the given string."""
   name_starts_with: String
-
-  """All values not starting with the given string."""
   name_not_starts_with: String
-
-  """All values ending with the given string."""
   name_ends_with: String
-
-  """All values not ending with the given string."""
   name_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
 }
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }

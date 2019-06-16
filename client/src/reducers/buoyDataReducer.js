@@ -6,7 +6,6 @@ import {
 
 const INITIAL_STATE = {
   data: null,
-  dummy: {},
 }
 
 const buoyDataReducer = (state = INITIAL_STATE, action) => {
