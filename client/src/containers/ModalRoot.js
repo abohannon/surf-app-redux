@@ -11,6 +11,7 @@ import {
 class ModalRoot extends Component {
   static propTypes = {
     modal: PropTypes.object,
+    modalProps: PropTypes.object,
   }
 
   static components = {
@@ -19,14 +20,14 @@ class ModalRoot extends Component {
 
   render() {
     const { modal } = this.props
-    const { modalType, modalOpen } = modal
+    const { modalType, modalOpen, modalProps } = modal
 
     if (!modalType) return null
 
     const ActiveModal = ModalRoot.components[modalType]
 
     return (
-      <ActiveModal open={modalOpen} />
+      <ActiveModal open={modalOpen} modalProps={modalProps} />
     )
   }
 }

@@ -6,6 +6,7 @@ import {
 const INITIAL_STATE = {
   modelOpen: false,
   modalType: null,
+  modalProps: {},
 }
 
 const modalReducer = (state = INITIAL_STATE, action) => {
@@ -14,12 +15,10 @@ const modalReducer = (state = INITIAL_STATE, action) => {
       return {
         modalOpen: true,
         modalType: action.payload,
+        modalProps: action.modalProps,
       }
     case MODAL_CLOSE:
-      return {
-        modalOpen: false,
-        modalType: null,
-      }
+      return INITIAL_STATE
     default:
       return state
   }

@@ -1,0 +1,16 @@
+extend type Query {
+   buoyData(stationId: String!): [Buoy!]!
+}
+
+type Buoy {
+  date: String,
+  windDirection: String,
+  windSpeed: String,
+  waveHeight: String,
+  dominantWavePeriod: String,
+  averageWavePeriod: String,
+  meanWaveDirection: String,
+  airTemp: String,
+  waterTemp: String,
+  tide: String
+}

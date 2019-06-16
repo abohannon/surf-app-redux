@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { ThemeProvider, styled } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { connect } from 'react-redux'
@@ -10,8 +11,6 @@ import { mainTheme } from '../style/theme'
 
 import { fetchBuoyData } from '../actions/buoyData'
 import { toggleModal } from '../actions/modal'
-
-import { LOGIN_USER } from '../actions/types'
 
 const RootContainer = styled(`div`)({
   display: `flex`,
@@ -25,22 +24,40 @@ const ContentContainer = styled(`main`)(({ theme }) => ({
 const NavPaddingDiv = styled(`div`)(({ theme }) => theme.mixins.toolbar)
 
 class App extends Component {
-  componentDidMount() {
-    const data = { stationId: 46258 }
-    this.props.dispatch(fetchBuoyData(data))
+  static propTypes = {
+    dispatch: PropTypes.func,
   }
 
-  handleLogin = () => {
-    this.props.dispatch(toggleModal(LOGIN_USER))
+  componentDidMount() {
+    const { dispatch } = this.props
+    // const data = { stationId: 46258 }
+    // dispatch(fetchBuoyData(data))
+  }
+
+  handleLogin = (data) => {
+    console.log(data)
+  }
+
+  handleModal = (type) => {
+    const { dispatch } = this.props
+
+    const modalProps = {
+      onClose: () => dispatch(toggleModal()),
+      onLogin: data => this.handleLogin(data),
+    }
+
+    dispatch(toggleModal(type, modalProps))
   }
 
   render() {
-    console.log(this.props)
     return (
       <ThemeProvider theme={mainTheme}>
         <CssBaseline />
         <RootContainer>
-          <TopNav handleLogin={this.handleLogin} />
+          <TopNav
+            handleModal={this.handleModal}
+            handleLogin={this.handleLogin}
+          />
           <SideNav />
           <ContentContainer>
             <NavPaddingDiv />
