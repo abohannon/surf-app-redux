@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import { AllUsersQuery } from '../queries/Users'
 import { Paper } from '../components/common'
 
 class ReportContainer extends Component {
@@ -25,7 +26,9 @@ class ReportContainer extends Component {
           </Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper>xs=6</Paper>
+          <Paper>
+            <AllUsersQuery />
+          </Paper>
         </Grid>
         <Grid item xs={6}>
           <Paper>xs=6</Paper>
