@@ -15,7 +15,7 @@ export const AllUsersQuery = () => (
   >
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>
-      if (error) return <p>Error :(</p>
+      if (error) return <p>Error!</p>
 
       return data.users.map(({ name }) => (
         <p>{name}</p>

@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 import { DialogTitle, Button } from '../common'
 import Login from './Login'
+import { LoginMutation } from '../../mutations/LoginMutation'
 
 const LoginModal = ({ fullScreen, open, modalProps }) => {
   const { onClose, onLogin } = modalProps
@@ -19,20 +20,24 @@ const LoginModal = ({ fullScreen, open, modalProps }) => {
   }
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullScreen={fullScreen}
-    >
-      <DialogTitle onClose={onClose}>Please login</DialogTitle>
-      <DialogContent>
-        <Login updateParentState={handleChange} />
-      </DialogContent>
-      <DialogActions>
-        <Button color="secondary">Register</Button>
-        <Button color="primary" onClick={() => onLogin(values)}>Login</Button>
-      </DialogActions>
-    </Dialog>
+    <LoginMutation>
+      { login => (
+        <Dialog
+          open={open}
+          onClose={onClose}
+          fullScreen={fullScreen}
+        >
+          <DialogTitle onClose={onClose}>Please login</DialogTitle>
+          <DialogContent>
+            <Login updateParentState={handleChange} />
+          </DialogContent>
+          <DialogActions>
+            <Button color="secondary">Register</Button>
+            <Button color="primary" onClick={() => login({ variables: { ...values } })}>Login</Button>
+          </DialogActions>
+        </Dialog>
+      )}
+    </LoginMutation>
   )
 }
 
