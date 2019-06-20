@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
 import store from './store'
 import client from './apollo'
-import App from './containers/App'
+import AppContainer from './containers/AppContainer'
 
 // To add es6 promise polyfill the global environment
 polyfill()
@@ -14,7 +14,7 @@ store.getState()
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Provider store={store}>
-      <App />
+      <AppContainer />
     </Provider>
   </ApolloProvider>,
   document.getElementById(`root`),

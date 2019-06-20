@@ -17,10 +17,28 @@ export const AllUsersQuery = () => (
       if (loading) return <p>Loading...</p>
       if (error) return <p>Error!</p>
 
-      return data.users.map(({ name }) => (
-        <p>{name}</p>
+      return data.users.map(({ id, name }) => (
+        <p key={id}>{name}</p>
       ))
     }
   }
+  </Query>
+)
+
+export const AuthQuery = ({ children }) => (
+  <Query
+    query={gql`
+      {
+        user {
+          id
+          name
+          email
+        }
+      }
+    `}
+  >
+    {queryResult => (
+      children(queryResult)
+    )}
   </Query>
 )

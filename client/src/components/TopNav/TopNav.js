@@ -17,29 +17,70 @@ const StyledToolbar = styled(Toolbar)({
 })
 
 const TopNav = (props) => {
-  const { handleModal, handleLogin, ...rest } = props
+  const {
+    loading,
+    user,
+    handleModal,
+    handleLogin,
+    handleLogout,
+    toggleSideNavRight,
+    ...rest
+  } = props
+
+  const renderLoginButton = () => {
+    console.log(`renderLoginButton`)
+    console.log(`loading:`, loading)
+    console.log(`user.user:`, user.user)
+    if (loading) {
+      return null
+    }
+
+    if (user.user) {
+      return (
+        <AccountIcon
+          onClick={toggleSideNavRight}
+          style={{ alignSelf: `flex-end` }}
+          button
+        />
+      )
+    }
+    console.log(`render button`)
+    return (
+      <Button
+        color="inherit"
+        style={{ alignSelf: `flex-end` }}
+        onClick={() => handleModal(LOGIN_USER)}
+      >
+      LOGIN
+      </Button>
+    )
+  }
+
   return (
     <StyledAppBar position="fixed" {...rest}>
       <StyledToolbar>
-        { localStorage.getItem(`token`)
-          ? <AccountIcon style={{ alignSelf: `flex-end` }} />
-          : (
-            <Button
-              color="inherit"
-              style={{ alignSelf: `flex-end` }}
-              onClick={() => handleModal(LOGIN_USER)}
-            >
-            LOGIN
-            </Button>
-          )
-        }
+        {renderLoginButton()}
       </StyledToolbar>
     </StyledAppBar>
   )
 }
 
 TopNav.propTypes = {
+  loading: PropTypes.bool,
+  user: PropTypes.objectOf(PropTypes.object),
   handleLogin: PropTypes.func,
+  handleLogout: PropTypes.func,
+  handleModal: PropTypes.func,
+  toggleSideNavRight: PropTypes.func,
+}
+
+TopNav.defaultProps = {
+  loading: false,
+  user: {},
+  handleLogin: () => {},
+  handleLogout: () => {},
+  handleModal: () => {},
+  toggleSideNavRight: () => {},
 }
 
 export default TopNav

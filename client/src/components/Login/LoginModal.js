@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 import { DialogTitle, Button } from '../common'
 import Login from './Login'
-import { LoginMutation } from '../../mutations/LoginMutation'
+import { LoginMutation } from '../../mutations/User'
 
 const LoginModal = ({ fullScreen, open, modalProps }) => {
   const { onClose, onLogin } = modalProps

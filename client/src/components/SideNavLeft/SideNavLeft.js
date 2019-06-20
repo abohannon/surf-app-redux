@@ -16,7 +16,7 @@ const paperProps = {
   },
 }
 
-const SideNav = props => (
+const SideNavLeft = props => (
   <StyledDrawer
     variant="permanent"
     PaperProps={paperProps}
@@ -26,8 +26,8 @@ const SideNav = props => (
   </StyledDrawer>
 )
 
-SideNav.propTypes = {
+SideNavLeft.propTypes = {
 
 }
 
-export default SideNav
+export default SideNavLeft
