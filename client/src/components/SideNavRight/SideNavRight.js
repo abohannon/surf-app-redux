@@ -12,7 +12,13 @@ const NavListContainer = styled(`div`)({
   width: 200,
 })
 
+
 const SideNavRight = ({ open, toggleDrawer, handleLogout }) => {
+  const onLogout = () => {
+    handleLogout()
+    toggleDrawer()
+  }
+
   const NavList = () => (
     <NavListContainer>
       <List>
@@ -25,7 +31,7 @@ const SideNavRight = ({ open, toggleDrawer, handleLogout }) => {
       </List>
       <Divider />
       <List>
-        <ListItem button onClick={handleLogout}>
+        <ListItem button onClick={onLogout}>
           <ListItemText primary="Logout" />
         </ListItem>
       </List>

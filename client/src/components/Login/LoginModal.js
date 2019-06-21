@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { graphql } from 'react-apollo'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -7,8 +8,11 @@ import withMobileDialog from '@material-ui/core/withMobileDialog'
 import { DialogTitle, Button } from '../common'
 import Login from './Login'
 import { LoginMutation } from '../../mutations/User'
+import { AuthQuery } from '../../queries/User'
 
-const LoginModal = ({ fullScreen, open, modalProps }) => {
+const LoginModal = ({
+  fullScreen, open, modalProps, loginMutation,
+}) => {
   const { onClose, onLogin } = modalProps
 
   const [values, setValues] = React.useState({})
@@ -20,24 +24,25 @@ const LoginModal = ({ fullScreen, open, modalProps }) => {
   }
 
   return (
-    <LoginMutation>
-      { login => (
-        <Dialog
-          open={open}
-          onClose={onClose}
-          fullScreen={fullScreen}
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullScreen={fullScreen}
+    >
+      <DialogTitle onClose={onClose}>Please login</DialogTitle>
+      <DialogContent>
+        <Login updateParentState={handleChange} />
+      </DialogContent>
+      <DialogActions>
+        <Button color="secondary">Register</Button>
+        <Button
+          color="primary"
+          onClick={() => loginMutation({ variables: { ...values } })}
         >
-          <DialogTitle onClose={onClose}>Please login</DialogTitle>
-          <DialogContent>
-            <Login updateParentState={handleChange} />
-          </DialogContent>
-          <DialogActions>
-            <Button color="secondary">Register</Button>
-            <Button color="primary" onClick={() => login({ variables: { ...values } })}>Login</Button>
-          </DialogActions>
-        </Dialog>
-      )}
-    </LoginMutation>
+        Login
+        </Button>
+      </DialogActions>
+    </Dialog>
   )
 }
 
@@ -56,4 +61,17 @@ LoginModal.defaultProps = {
   },
 }
 
-export default withMobileDialog({ breakpoint: `xs` })(LoginModal)
+const LoginModalWithMobileDialog = withMobileDialog({ breakpoint: `xs` })(LoginModal)
+
+export default graphql(LoginMutation, {
+  name: `loginMutation`,
+  options: {
+    onCompleted: data => localStorage.setItem(`token`, data.login.token),
+    onError: error => console.log(`Error logging in.`, error),
+    refetchQueries: [
+      {
+        query: AuthQuery,
+      },
+    ],
+  },
+})(LoginModalWithMobileDialog)

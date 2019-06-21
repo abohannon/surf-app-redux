@@ -1,13 +1,29 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { graphql } from 'react-apollo'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { AllUsersQuery } from '../queries/User'
 import { Paper } from '../components/common'
 
 class ReportContainer extends Component {
-  componentDidMount() {
+  static propTypes = {
+    allUsersQuery: PropTypes.objectOf(PropTypes.any),
+  }
 
+  static defaultProps = {
+    allUsersQuery: {},
+  }
+
+  componentDidMount() {
+  }
+
+  renderUsers = () => {
+    const { allUsersQuery: { loading, error, users } } = this.props
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>{error}</p>
+
+    return users.map(user => <p key={user.id}>{user.name}</p>)
   }
 
   render() {
@@ -27,7 +43,7 @@ class ReportContainer extends Component {
         </Grid>
         <Grid item xs={6}>
           <Paper>
-            <AllUsersQuery />
+            {this.renderUsers()}
           </Paper>
         </Grid>
         <Grid item xs={6}>
@@ -38,4 +54,4 @@ class ReportContainer extends Component {
   }
 }
 
-export default ReportContainer
+export default graphql(AllUsersQuery, { name: `allUsersQuery` })(ReportContainer)

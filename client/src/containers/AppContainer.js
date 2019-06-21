@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { graphql, withApollo } from 'react-apollo'
 import { ThemeProvider, styled } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { connect } from 'react-redux'
@@ -42,7 +43,10 @@ class AppContainer extends Component {
   }
 
   handleLogout = (callback) => {
+    const { client } = this.props
+
     localStorage.removeItem(`token`)
+    client.resetStore()
 
     if (callback) {
       callback()
@@ -67,34 +71,31 @@ class AppContainer extends Component {
   }
 
   render() {
+    const { authQuery, client } = this.props
     const { sideNavRightOpen } = this.state
+
     return (
       <ThemeProvider theme={mainTheme}>
         <CssBaseline />
-        <AuthQuery>
-          { ({ client, loading, data }) => (
-            <RootContainer>
-              <TopNav
-                loading={loading}
-                user={data}
-                handleModal={this.handleModal}
-                handleLogin={this.handleLogin}
-                toggleSideNavRight={this.handleSideNavRight}
-              />
-              <SideNavLeft />
-              <SideNavRight
-                open={sideNavRightOpen}
-                toggleDrawer={this.handleSideNavRight}
-                handleLogout={() => this.handleLogout(client.resetStore)}
-              />
-              <ContentContainer>
-                <NavPaddingDiv />
-                <ReportContainer />
-              </ContentContainer>
-            </RootContainer>
-          )
-        }
-        </AuthQuery>
+        <RootContainer>
+          <TopNav
+            loading={authQuery.loading}
+            user={authQuery.currentUser}
+            handleModal={this.handleModal}
+            handleLogin={this.handleLogin}
+            toggleSideNavRight={this.handleSideNavRight}
+          />
+          <SideNavLeft />
+          <SideNavRight
+            open={sideNavRightOpen}
+            toggleDrawer={this.handleSideNavRight}
+            handleLogout={this.handleLogout}
+          />
+          <ContentContainer>
+            <NavPaddingDiv />
+            <ReportContainer />
+          </ContentContainer>
+        </RootContainer>
         <ModalRoot />
       </ThemeProvider>
     )
@@ -107,4 +108,8 @@ const mapStateToProps = ({ buoyData, modal }) => ({
   modal,
 })
 
-export default connect(mapStateToProps)(AppContainer)
+const graphqlConfig = {
+  name: `authQuery`,
+}
+
+export default withApollo(graphql(AuthQuery, graphqlConfig)(connect(mapStateToProps)(AppContainer)))

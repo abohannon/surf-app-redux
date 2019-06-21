@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
 import { styled } from '@material-ui/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -17,6 +18,7 @@ const StyledToolbar = styled(Toolbar)({
 })
 
 const TopNav = (props) => {
+  console.log(`TopNav Props`, props)
   const {
     loading,
     user,
@@ -28,14 +30,11 @@ const TopNav = (props) => {
   } = props
 
   const renderLoginButton = () => {
-    console.log(`renderLoginButton`)
-    console.log(`loading:`, loading)
-    console.log(`user.user:`, user.user)
     if (loading) {
       return null
     }
 
-    if (user.user) {
+    if (!isEmpty(user)) {
       return (
         <AccountIcon
           onClick={toggleSideNavRight}
@@ -44,7 +43,7 @@ const TopNav = (props) => {
         />
       )
     }
-    console.log(`render button`)
+
     return (
       <Button
         color="inherit"
@@ -67,7 +66,7 @@ const TopNav = (props) => {
 
 TopNav.propTypes = {
   loading: PropTypes.bool,
-  user: PropTypes.objectOf(PropTypes.object),
+  user: PropTypes.objectOf(PropTypes.string),
   handleLogin: PropTypes.func,
   handleLogout: PropTypes.func,
   handleModal: PropTypes.func,
