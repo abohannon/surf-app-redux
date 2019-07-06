@@ -7,7 +7,7 @@ const getUserId = (request, requireAuth = true) => {
     ? request.request.headers.authorization
     : request.connection.context.Authorization
     // ^^ for grabbing auth headers from a websocket request
-  
+
   if (header) {
     const token = header.replace(`Bearer `, ``)
     const decoded = jwt.verify(token, secret)

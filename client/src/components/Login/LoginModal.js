@@ -23,6 +23,11 @@ const LoginModal = ({
     setValues(currValues => ({ ...currValues, [name]: value }))
   }
 
+  const handleLogin = () => {
+    localStorage.removeItem(`token`)
+    loginMutation({ variables: { ...values } })
+  }
+
   return (
     <Dialog
       open={open}
@@ -37,7 +42,7 @@ const LoginModal = ({
         <Button color="secondary">Register</Button>
         <Button
           color="primary"
-          onClick={() => loginMutation({ variables: { ...values } })}
+          onClick={handleLogin}
         >
         Login
         </Button>
@@ -68,10 +73,5 @@ export default graphql(LoginMutation, {
   options: {
     onCompleted: data => localStorage.setItem(`token`, data.login.token),
     onError: error => console.log(`Error logging in.`, error),
-    refetchQueries: [
-      {
-        query: AuthQuery,
-      },
-    ],
   },
 })(LoginModalWithMobileDialog)

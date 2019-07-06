@@ -20,7 +20,7 @@ const Query = {
 
     return prisma.query.users(opArgs, info)
   },
-  async me(parent, args, { prisma, request }, info) {
+  async currentUser(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
 
     if (!userId) throw new Error(`No user found`)

@@ -17,12 +17,3 @@ export const LoginMutation = gql`
     }
   }
 `
-
-// export const LoginMutation = props => (
-//   <Mutation
-//     mutation={LOGIN_USER}
-//     onCompleted={data => localStorage.setItem(`token`, data.login.token)}
-//   >
-//     { login => props.children(login) }
-//   </Mutation>
-// )
