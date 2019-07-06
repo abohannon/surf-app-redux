@@ -1,17 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { graphql } from 'react-apollo'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 import { DialogTitle, Button } from '../common'
 import Login from './Login'
-import { LoginMutation } from '../../mutations/User'
-import { AuthQuery } from '../../queries/User'
 
 const LoginModal = ({
-  fullScreen, open, modalProps, loginMutation,
+  fullScreen, open, modalProps,
 }) => {
   const { onClose, onLogin } = modalProps
 
@@ -21,11 +18,6 @@ const LoginModal = ({
     const { value, name } = event.target
 
     setValues(currValues => ({ ...currValues, [name]: value }))
-  }
-
-  const handleLogin = () => {
-    localStorage.removeItem(`token`)
-    loginMutation({ variables: { ...values } })
   }
 
   return (
@@ -42,7 +34,7 @@ const LoginModal = ({
         <Button color="secondary">Register</Button>
         <Button
           color="primary"
-          onClick={handleLogin}
+          onClick={() => onLogin(values)}
         >
         Login
         </Button>
@@ -68,10 +60,4 @@ LoginModal.defaultProps = {
 
 const LoginModalWithMobileDialog = withMobileDialog({ breakpoint: `xs` })(LoginModal)
 
-export default graphql(LoginMutation, {
-  name: `loginMutation`,
-  options: {
-    onCompleted: data => localStorage.setItem(`token`, data.login.token),
-    onError: error => console.log(`Error logging in.`, error),
-  },
-})(LoginModalWithMobileDialog)
+export default LoginModalWithMobileDialog

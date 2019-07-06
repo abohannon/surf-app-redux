@@ -18,7 +18,6 @@ const StyledToolbar = styled(Toolbar)({
 })
 
 const TopNav = (props) => {
-  console.log(`TopNav Props`, props)
   const {
     loading,
     user,

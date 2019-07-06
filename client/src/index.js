@@ -11,6 +11,7 @@ import AppContainer from './containers/AppContainer'
 // To add es6 promise polyfill the global environment
 polyfill()
 store.getState()
+
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Provider store={store}>

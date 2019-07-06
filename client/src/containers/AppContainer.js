@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { graphql, withApollo } from 'react-apollo'
+import { graphql, withApollo, compose } from 'react-apollo'
 import { ThemeProvider, styled } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { connect } from 'react-redux'
@@ -15,6 +15,7 @@ import { fetchBuoyData } from '../actions/buoyData'
 import { toggleModal } from '../actions/modal'
 
 import { AuthQuery } from '../queries/User'
+import { LoginMutation } from '../mutations/User'
 
 const RootContainer = styled(`div`)({
   display: `flex`,
@@ -40,6 +41,13 @@ class AppContainer extends Component {
     const { dispatch } = this.props
 
     dispatch(fetchBuoyData())
+  }
+
+  handleLogin = (values) => {
+    console.log({ values })
+    const { client, loginMutation } = this.props
+    localStorage.removeItem(`token`)
+    loginMutation({ variables: { ...values } })
   }
 
   handleLogout = (callback) => {
@@ -108,8 +116,19 @@ const mapStateToProps = ({ buoyData, modal }) => ({
   modal,
 })
 
-const graphqlConfig = {
-  name: `authQuery`,
-}
+const connectedAppContainer = connect(mapStateToProps)(AppContainer)
 
-export default withApollo(graphql(AuthQuery, graphqlConfig)(connect(mapStateToProps)(AppContainer)))
+export default compose(
+  withApollo,
+  graphql(AuthQuery, { name: `authQuery` }),
+  graphql(LoginMutation, {
+    name: `loginMutation`,
+    options: {
+      onCompleted: (data) => {
+        localStorage.setItem(`token`, data.login.token)
+        console.log({ data })
+      },
+      onError: error => console.log(`Error logging in.`, error),
+    },
+  }),
+)(connectedAppContainer)
